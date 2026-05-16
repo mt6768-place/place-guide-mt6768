@@ -1,93 +1,77 @@
-````md
 # 🌌 MT6768-Place: The Developer's Forge
 
 > *"Breathing new life into MT6768 devices, one commit at a time."*
 
-Welcome to the official setup guide for the MT6768-Place ecosystem.
+Welcome to the official setup guide for the **MT6768-Place** ecosystem.
 
-This repository provides everything needed to initialize a complete Android ROM bringup environment for MT6768-based Xiaomi devices.
+This repository provides a simple and clean way to initialize all required sources for:
+- 📱 Device Trees
+- 🧠 Kernel Sources
+- 📦 Vendor Blobs
+- 🛡️ Hardware & Sepolicy
+- ⚡ Bringup Scripts
+- 🏛️ Local Manifests
 
-Supported devices include:
+Supported devices:
+- Xiaomi Redmi 9 (Lancelot)
+- Xiaomi Redmi Note 9 (Merlinx)
 
-- Redmi 9 (Lancelot)
-- Redmi Note 9 (Merlinx)
+---
+
+# 📚 Table of Contents
+
+- [✨ Features](#-features)
+- [⚡ Method A — Manual Trees Script](#-method-a--manual-trees-script)
+- [🏛️ Method B — Local Manifest (Recommended)](#️-method-b--local-manifest-recommended)
+- [📦 Included Components](#-included-components)
+- [🤝 Contributing](#-contributing)
+- [📜 License](#-license)
+- [⭐ Credits](#-credits)
 
 ---
 
 # ✨ Features
 
-- 📱 Device Trees
-- 🧠 Kernel Sources
-- 📦 Vendor Blobs
-- 🛡️ Hardware & Sepolicy
-- ⚡ One-command setup
-- 🏛️ Local manifest integration
-- 🔄 Compatible with LineageOS / AOSP based ROMs
+- Fully automated setup
+- Clean repository structure
+- Compatible with:
+  - LineageOS
+  - AOSP
+  - PixelOS
+  - crDroid
+  - DerpFest
+- Easy `repo sync` integration
+- Fast bringup workflow
 
 ---
 
-# 📦 Included Components
+# ⚡ Method A — Manual Trees Script
 
-| Component | Description |
-|---|---|
-| device/xiaomi/lancelot | Redmi 9 |
-| device/xiaomi/merlinx | Redmi Note 9 |
-| device/xiaomi/mt6768-common | Shared MT6768 trees |
-| kernel/xiaomi/mt6768 | Common kernel |
-| vendor/xiaomi/* | Vendor blobs |
-| hardware/xiaomi | Xiaomi hardware |
-| hardware/mediatek | MTK hardware |
-| device/mediatek/sepolicy_vndr | Vendor sepolicy |
-| vendor/mediatek/ims | IMS support |
+Perfect for:
+- Quick testing
+- Fast bringups
+- Manual control
 
 ---
 
-# ⚡ Quick Setup (Recommended)
+# 🚀 OPTION 1 — BASCRIPT (RECOMMENDED)
 
-## Download Manifest
-
-```bash
-mkdir -p .repo/local_manifests
-
-curl -L https://raw.githubusercontent.com/mt6768-place/place-guide-mt6768/refs/heads/main/manifest.xml \
--o .repo/local_manifests/mt6768.xml
-````
-
-## Sync Sources
+## 📥 Download script to ROOT
 
 ```bash
-repo sync -c -j$(nproc --all) \
---force-sync \
---no-clone-bundle \
---no-tags
-```
-
----
-
-# ⚡ Alternative Setup (trees.sh)
-
-If you prefer direct cloning instead of repo manifests:
-
-## Download Script
-
-```bash
-mkdir -p tools/mt6768
-
 curl -L https://raw.githubusercontent.com/mt6768-place/place-guide-mt6768/refs/heads/main/trees.sh \
--o tools/mt6768/trees.sh
+-o trees.sh
 
-chmod +x tools/mt6768/trees.sh
+chmod +x trees.sh
+
+./trees.sh
 ```
 
-## Execute
-
-```bash
-bash tools/mt6768/trees.sh
-```
+## ▶️ Run it
 
 ---
 
-# 📄 trees.sh
+## 📜 trees.sh
 
 ```bash
 #!/bin/bash
@@ -159,7 +143,30 @@ echo "✨ MT6768-Place sync completed!"
 
 ---
 
-# 📄 manifest.xml
+# 🏛️ Method B — Local Manifest (Recommended)
+
+Recommended for:
+- Long-term maintenance
+- Cleaner source trees
+- Easier syncing
+- CI environments
+
+---
+
+## 📥 Install the Manifest
+
+```bash
+mkdir -p .repo/local_manifests
+
+curl -L https://raw.githubusercontent.com/mt6768-place/place-guide-mt6768/refs/heads/main/manifest.xml \
+-o .repo/local_manifests/mt6768.xml
+
+repo sync -j$(nproc --all)
+```
+
+---
+
+## 📜 manifest.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -248,23 +255,19 @@ echo "✨ MT6768-Place sync completed!"
 
 ---
 
-# 💡 Developer Notes
+# 📦 Included Components
 
-## Enable CCache
-
-```bash
-export USE_CCACHE=1
-ccache -M 100G
-```
-
-## Recommended Environment
-
-| Requirement | Recommended   |
-| ----------- | ------------- |
-| OS          | Ubuntu 22.04+ |
-| RAM         | 16 GB+        |
-| Storage     | 300 GB+       |
-| CPU         | 8 Cores+      |
+| Component | Description |
+|---|---|
+| device/xiaomi/lancelot | Redmi 9 device tree |
+| device/xiaomi/merlinx | Redmi Note 9 device tree |
+| device/xiaomi/mt6768-common | Shared MT6768 tree |
+| kernel/xiaomi/mt6768 | Common MT6768 kernel |
+| vendor/xiaomi/* | Proprietary vendor blobs |
+| hardware/xiaomi | Xiaomi hardware |
+| hardware/mediatek | Mediatek hardware |
+| device/mediatek/sepolicy_vndr | Vendor sepolicy |
+| vendor/mediatek/ims | IMS support |
 
 ---
 
@@ -273,12 +276,11 @@ ccache -M 100G
 Pull requests are welcome.
 
 Feel free to:
-
-* Update trees
-* Improve scripts
-* Fix blobs
-* Improve sepolicy
-* Add support for more MT6768 devices
+- Fix trees
+- Improve sepolicy
+- Update vendors
+- Optimize scripts
+- Add support for more MT6768 devices
 
 ---
 
@@ -286,21 +288,19 @@ Feel free to:
 
 GPL-2.0 unless specified otherwise.
 
+Vendor blobs remain property of their respective owners.
+
 ---
 
 # ⭐ Credits
 
-* LineageOS
-* AOSP
-* Mediatek OSS Community
-* Xiaomi MTK developers
+- LineageOS
+- AOSP
+- Mediatek OSS Community
+- Xiaomi MTK Developers
+- MT6768-Place Contributors
 
 ---
 
 > *"Every successful build starts with a single sync."*
-
-```
-
-Basado en la estructura de manifests y bringup Android usada habitualmente en proyectos MT6768 y LineageOS. :contentReference[oaicite:0]{index=0}
-::contentReference[oaicite:1]{index=1}
-```
+````
