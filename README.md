@@ -45,6 +45,8 @@ Supported devices:
 
 ---
 
+# 🔷 How to Start?
+
 # ⚡ Method A — Manual Trees Script
 
 Perfect for:
@@ -53,8 +55,6 @@ Perfect for:
 - Manual control
 
 ---
-
-# 🚀 OPTION 1 — BASCRIPT (RECOMMENDED)
 
 ## 📥 Download script to ROOT
 
